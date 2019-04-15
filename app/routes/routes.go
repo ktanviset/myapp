@@ -109,4 +109,32 @@ func (_ tApp) Index(
 	return revel.MainRouter.Reverse("App.Index", args).URL
 }
 
+func (_ tApp) Hello(
+		myName string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "myName", myName)
+	return revel.MainRouter.Reverse("App.Hello", args).URL
+}
+
+
+type tMapMakerController struct {}
+var MapMakerController tMapMakerController
+
+
+func (_ tMapMakerController) GetMakers(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("MapMakerController.GetMakers", args).URL
+}
+
+func (_ tMapMakerController) SaveMaker(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("MapMakerController.SaveMaker", args).URL
+}
+
 

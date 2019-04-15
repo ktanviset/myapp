@@ -1,6 +1,6 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
-
+<!--
 <header class="jumbotron" style="background-color:#A9F16C">
   <div class="container">
     <div class="row">
@@ -9,6 +9,19 @@
     </div>
   </div>
 </header>
+-->
+<div id="map" class="container"></div>
+<div id="form">
+  <table>
+  <tr><td>Name:</td> <td><input type='text' id='name'/> </td> </tr>
+  <tr><td>Address:</td> <td><input type='text' id='address'/> </td> </tr>
+  <tr><td>Type:</td> <td><select id='type'> +
+             <option value='bar' SELECTED>bar</option>
+             <option value='restaurant'>restaurant</option>
+             </select> </td></tr>
+             <tr><td></td><td><input type='button' value='Save' onclick=''/></td></tr>
+  </table>
+</div>
 
 <div class="container">
   <div class="row">
@@ -18,4 +31,38 @@
   </div>
 </div>
 
+<script>
+  var map;
+  var marker;
+  var infowindow;
+  var messagewindow;
+
+  function initMap() {
+    var california = {lat: 37.4419, lng: -122.1419};
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: california,
+      zoom: 13
+    });
+
+    infowindow = new google.maps.InfoWindow({
+      content: document.getElementById('form')
+    });
+
+    messagewindow = new google.maps.InfoWindow({
+      content: document.getElementById('message')
+    });
+
+    google.maps.event.addListener(map, 'click', function(event) {
+      marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map, marker);
+      });
+    });
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTuk-2muu8Qub4Fo8V9ZlduvoDL8BO0d4&callback=initMap" async defer></script>
 {{template "footer.html" .}}

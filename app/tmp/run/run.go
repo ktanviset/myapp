@@ -126,6 +126,36 @@ func Register() {
 					},
 				},
 			},
+			&revel.MethodType{
+				Name: "Hello",
+				Args: []*revel.MethodArg{ 
+					&revel.MethodArg{Name: "myName", Type: reflect.TypeOf((*string)(nil)) },
+				},
+				RenderArgNames: map[int][]string{ 
+					16: []string{ 
+						"myName",
+					},
+				},
+			},
+			
+		})
+	
+	revel.RegisterController((*controllers1.MapMakerController)(nil),
+		[]*revel.MethodType{
+			&revel.MethodType{
+				Name: "GetMakers",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			&revel.MethodType{
+				Name: "SaveMaker",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
 			
 		})
 	
