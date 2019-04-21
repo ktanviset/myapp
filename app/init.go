@@ -1,8 +1,15 @@
 package app
 
 import (
+	"fmt"
+
+	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
+
 	"github.com/revel/revel"
 )
+
+var DB *sql.DB
 
 var (
 	// AppVersion revel app version (ldflags)
@@ -34,7 +41,7 @@ func init() {
 	// revel.DevMode and revel.RunMode only work inside of OnAppStart. See Example Startup Script
 	// ( order dependent )
 	// revel.OnAppStart(ExampleStartupScript)
-	// revel.OnAppStart(InitDB)
+	//revel.OnAppStart(InitDB)
 	// revel.OnAppStart(FillCache)
 }
 
@@ -57,3 +64,14 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 //		// Dev mode
 //	}
 //}
+
+func InitDB() {
+	var err error
+	DB, err = sql.Open("mysql", "root:1234@tcp(localhost:3306)/app_gmapmaker")
+	if err != nil {
+		//revel.INFO.Println("DB Error", err)
+		fmt.Println("DB Error", err)
+	}
+	//revel.INFO.Println("DB Connected")
+	fmt.Println("DB Connected")
+}

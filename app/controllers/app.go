@@ -13,5 +13,13 @@ func (c App) Index() revel.Result {
 }
 
 func (c App) Hello(myName string) revel.Result {
-    return c.Render(myName)
+	return c.Render(myName)
+}
+
+func (c App) AddMaker() revel.Result {
+	return c.Render()
+}
+
+func (c App) Search() revel.Result {
+	return c.Render()
 }

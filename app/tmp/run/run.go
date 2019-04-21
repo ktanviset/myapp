@@ -137,6 +137,24 @@ func Register() {
 					},
 				},
 			},
+			&revel.MethodType{
+				Name: "AddMaker",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+					20: []string{ 
+					},
+				},
+			},
+			&revel.MethodType{
+				Name: "Search",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+					24: []string{ 
+					},
+				},
+			},
 			
 		})
 	

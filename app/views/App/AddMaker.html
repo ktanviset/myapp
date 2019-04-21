@@ -1,0 +1,55 @@
+{{set . "title" "Add Maker"}}
+{{template "header.html" .}}
+
+<div class="container">
+  <div class="row">
+    <div id="map" class="col-12"></div>
+  </div>
+</div>
+<div id="addmakerform" class="form-group hidden">
+  <table>
+  <tr><td>Name:</td> <td><input type='text' id='name' class="form-control form-control-sm"/> </td> </tr>
+  <tr><td>Address:</td> <td><input type='text' id='address' class="form-control form-control-sm"/> </td> </tr>
+  <tr><td></td><td><input type='button' class="btn btn-primary btn-sm" value='Save' onclick=''/></td></tr>
+  </table>
+</div>
+
+<script>
+    var map;
+    var marker;
+    var infowindow;
+    var messagewindow;
+  
+    function initMap() {
+      var california = {lat: 37.4419, lng: -122.1419};
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: california,
+        zoom: 13
+      });
+  
+      infowindow = new google.maps.InfoWindow({
+        content: document.getElementById('addmakerform')
+      });
+  
+      messagewindow = new google.maps.InfoWindow({
+        content: document.getElementById('message')
+      });
+  
+      google.maps.event.addListener(map, 'click', function(event) {
+        marker = new google.maps.Marker({
+          position: event.latLng,
+          map: map
+        });
+  
+        google.maps.event.addListener(marker, 'click', function() {
+          if ($('#addmakerform').hasClass('hidden')) {
+            $('#addmakerform').removeClass('hidden');
+          }
+          infowindow.open(map, marker);
+        });
+      });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTuk-2muu8Qub4Fo8V9ZlduvoDL8BO0d4&callback=initMap" async defer></script>
+
+{{template "footer.html" .}}

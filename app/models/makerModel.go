@@ -1,8 +1,8 @@
 package models
 
 type Maker struct {
-	Latitude  string `json:"latitude"`
-	Longitude string `json:"longitude"`
+	Latitude  float32 `json:"latitude"`
+	Longitude float32 `json:"longitude"`
 	Name      string `json:"name"`
 }
 

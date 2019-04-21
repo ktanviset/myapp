@@ -1,0 +1,14 @@
+#map {
+    height: 700px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#searchbar {
+    margin-top: 10px;
+}
+
+.hidden {
+    visibility: hidden;
+}
