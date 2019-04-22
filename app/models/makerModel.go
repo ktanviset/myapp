@@ -1,9 +1,11 @@
 package models
 
 type Maker struct {
+	ID        int     `json:"id"`
 	Latitude  float32 `json:"latitude"`
 	Longitude float32 `json:"longitude"`
-	Name      string `json:"name"`
+	NameTh    string  `json:"nameTh"`
+	NameEn    string  `json:"nameEn"`
 }
 
 type ListMakers struct {

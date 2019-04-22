@@ -1,44 +1,61 @@
 package controllers
 
 import (
+	"context"
 	"fmt"
-	//"myapp/app"
-	"myapp/app/models"
-	"github.com/revel/revel"
+	"log"
 
 	"database/sql"
-    _ "github.com/go-sql-driver/mysql"
+	"myapp/app/models"
+
+	_ "github.com/denisenkom/go-mssqldb"
+	"github.com/revel/revel"
 )
+
+var server = "localhost"
+var port = 1450
+var user = "systemweb"
+var password = "1q2w3e4r"
+var database = "app_gmapmaker"
+
+var db *sql.DB
 
 type MapMakerController struct {
 	*revel.Controller
 }
 
 func (mm MapMakerController) GetMakers() revel.Result {
-	sqlsm := "SELECT latitude, longitude, name from map_maker"
-
-	db, dberrcon := sql.Open("mysql", "root:1234@tcp(localhost:3306)/app_gmapmaker")
-
-	if dberrcon != nil{
-		fmt.Println("DB Error", dberrcon)
+	// Build connection string
+	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;", server, user, password, port, database)
+	var err error
+	// Create connection pool
+	db, err = sql.Open("sqlserver", connString)
+	if err != nil {
+		log.Fatal("Error creating connection pool: ", err.Error())
 	}
 
-	rows, dberrquery := db.Query(sqlsm)
-	
-	if dberrquery != nil{
-		fmt.Println("DB Error", dberrquery)
+	ctx := context.Background()
+	err = db.PingContext(ctx)
+	if err != nil {
+		log.Fatal(err.Error())
 	}
+	fmt.Printf("Connected!\n")
 
-	fmt.Println(rows)
+	// Execute query
+	tsql := fmt.Sprintf("SELECT id, name_th, name_en, latitude, longitude FROM map_maker;")
+	rows, err := db.QueryContext(ctx, tsql)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 
 	listmakers := models.ListMakers{}
 	makers := []*models.Maker{}
 
 	for rows.Next() {
 		maker := new(models.Maker)
-		if err := rows.Scan(&maker.Latitude, &maker.Longitude, &maker.Name); err != nil {
+		if err := rows.Scan(&maker.ID, &maker.NameTh, &maker.NameEn, &maker.Latitude, &maker.Longitude); err != nil {
 			fmt.Println(err)
-		}       
+		}
 		makers = append(makers, maker)
 	}
 
