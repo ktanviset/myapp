@@ -1,26 +1,18 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
 
-<div class="container">
+<div class="container flextop">
   <div id="searchbar" class="form-group row">
     <input class="form-control col-10" type="text" placeholder="คำค้น">
     <button type="button" class="btn btn-primary col-2">ค้นหา</button>
   </div>
 
-  <div class="row">
+  <div class="row remaining">
     <div id="map" class="col-12"></div>
   </div>
 </div>
 
-<script>
-  var map;
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 8
-    });
-  }
-</script>
+<script src="/public/js/indexMapScript.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTuk-2muu8Qub4Fo8V9ZlduvoDL8BO0d4&callback=initMap" async defer></script>
 
 {{template "footer.html" .}}

@@ -1,14 +1,38 @@
 #map {
-    height: 700px;
+    height: calc(100% - 56px); ;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 5px;
 }
 
 #searchbar {
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    margin-left: -15px;
+    margin-right: -15px;
 }
 
 .hidden {
-    visibility: hidden;
+    visibility: collapse;
+}
+
+.flextop {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+
+.remaining {
+    flex-grow : 1;
+}
+
+.infowindoes {
+    display: block;
+    overflow: auto;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
 }
