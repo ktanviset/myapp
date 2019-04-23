@@ -6,6 +6,7 @@ type Maker struct {
 	Longitude float32 `json:"longitude"`
 	NameTh    string  `json:"nameTh"`
 	NameEn    string  `json:"nameEn"`
+	LoCode    string  `json:"loCode"`
 }
 
 type ListMakers struct {

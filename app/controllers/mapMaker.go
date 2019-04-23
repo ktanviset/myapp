@@ -46,7 +46,7 @@ func (mm MapMakerController) GetMakers() revel.Result {
 	fmt.Printf("Connected!\n")
 
 	// Execute query
-	tsql := "SELECT top 100 id, name_th, name_en, latitude, longitude FROM map_maker WHERE name_th like '%%" + keyword + "%%' or name_en like '%%" + keyword + "%%' or lo_code = '" + keyword + "';"
+	tsql := "SELECT top 100 id, name_th, name_en, latitude, longitude, lo_code FROM map_maker WHERE name_th like '%%" + keyword + "%%' or name_en like '%%" + keyword + "%%' or lo_code like '%%" + keyword + "%%';"
 	fmt.Printf("tsql!" + tsql + "\n")
 	rows, err := db.QueryContext(ctx, tsql)
 	if err != nil {
@@ -58,7 +58,7 @@ func (mm MapMakerController) GetMakers() revel.Result {
 
 	for rows.Next() {
 		maker := new(models.Maker)
-		if err := rows.Scan(&maker.ID, &maker.NameTh, &maker.NameEn, &maker.Latitude, &maker.Longitude); err != nil {
+		if err := rows.Scan(&maker.ID, &maker.NameTh, &maker.NameEn, &maker.Latitude, &maker.Longitude, &maker.LoCode); err != nil {
 			fmt.Println(err)
 		}
 		makers = append(makers, maker)

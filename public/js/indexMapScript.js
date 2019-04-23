@@ -68,9 +68,11 @@ function updateMap(){
                 map: map,
             });
 
+            marker.locode = mkdata.loCode;
+
             marker.addListener('click', function() {
                 let i = index;
-                let text = "<div class=\"infowindoes\"><p class=\"text-justify\">"+markers[i].title+"</p></div>";
+                let text = "<div class=\"infowindoes\"><p class=\"text-justify\">" + markers[i].title + "<br>Location Code:" + markers[i].locode + "</p></div>";
                 infowindow.setContent(text);
                 infowindow.open(map, markers[i]);
             });
