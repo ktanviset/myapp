@@ -25,6 +25,10 @@ type MapMakerController struct {
 }
 
 func (mm MapMakerController) GetMakers() revel.Result {
+	// Get Param
+	keyword := mm.Params.Query.Get("keyword")
+	fmt.Printf("keyword!" + keyword + "\n")
+
 	// Build connection string
 	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;", server, user, password, port, database)
 	var err error
@@ -42,7 +46,8 @@ func (mm MapMakerController) GetMakers() revel.Result {
 	fmt.Printf("Connected!\n")
 
 	// Execute query
-	tsql := fmt.Sprintf("SELECT id, name_th, name_en, latitude, longitude FROM map_maker;")
+	tsql := "SELECT top 100 id, name_th, name_en, latitude, longitude FROM map_maker WHERE name_th like '%%" + keyword + "%%' or name_en like '%%" + keyword + "%%' or lo_code = '" + keyword + "';"
+	fmt.Printf("tsql!" + tsql + "\n")
 	rows, err := db.QueryContext(ctx, tsql)
 	if err != nil {
 		log.Fatal(err.Error())

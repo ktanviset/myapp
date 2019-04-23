@@ -1,9 +1,9 @@
 #map {
-    height: calc(100% - 56px); ;
+    height: calc(100% - 56px);
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 5px;
+    /*margin-top: 5px;*/
 }
 
 #searchbar {
@@ -11,6 +11,31 @@
     margin-bottom: 0px;
     margin-left: -15px;
     margin-right: -15px;
+}
+
+#lolist {
+    height: calc(100% - 56px);
+    display: flex;
+    flex-flow: column;
+}
+
+#lolist table {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    overflow: auto;
+}
+
+#lolist table thead {
+    width: 100%;
+}
+
+#lolist table thead tr {
+    width: 100%;
+}
+
+#lolist table tbody {
+    flex-grow : 1;
 }
 
 .hidden {
@@ -25,6 +50,7 @@
 
 .remaining {
     flex-grow : 1;
+    margin-top: 5px;
 }
 
 .infowindoes {
