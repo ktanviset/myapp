@@ -10,33 +10,6 @@ function initMap() {
     infowindow = new google.maps.InfoWindow({
         content: ""
     });
-
-    $.get("/api/GetMakers", function(data, status){
-        console.log(data);
-
-        $.each(data.Makers, function( index, mkdata ) {
-            let myLatlng = new google.maps.LatLng(mkdata.latitude,mkdata.longitude);
-            let myName = mkdata.nameTh;
-            if (mkdata.nameEn != null){
-                myName += "<br>" + mkdata.nameEn;
-            }
-
-            var marker = new google.maps.Marker({
-                position: myLatlng,
-                title:myName,
-                map: map,
-            });
-
-            marker.addListener('click', function() {
-                let i = index;
-                let text = "<div class=\"infowindoes\"><p class=\"text-justify\">"+markers[i].title+"</p></div>";
-                infowindow.setContent(text);
-                infowindow.open(map, markers[i]);
-            });
-    
-            markers.push(marker);
-        });
-    });
 }
 function updateMap(){
     $.each(markers, function( index, marker ) {
@@ -55,7 +28,9 @@ function updateMap(){
         $.each(data.Makers, function( index, mkdata ) {
             let myLatlng = new google.maps.LatLng(mkdata.latitude,mkdata.longitude);
 
-            bounds.extend(myLatlng);
+            if (!(mkdata.latitude == 0 && mkdata.longitude == 0)){
+                bounds.extend(myLatlng);
+            }
 
             let myName = mkdata.nameTh;
             if (mkdata.nameEn != null){
@@ -65,8 +40,11 @@ function updateMap(){
             var marker = new google.maps.Marker({
                 position: myLatlng,
                 title:myName,
-                map: map,
             });
+
+            if (!(mkdata.latitude == 0 && mkdata.longitude == 0)){
+                marker.setMap(map);
+            }
 
             marker.locode = mkdata.loCode;
 
