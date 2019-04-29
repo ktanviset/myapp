@@ -23,3 +23,7 @@ func (c App) AddMaker() revel.Result {
 func (c App) Search() revel.Result {
 	return c.Render()
 }
+
+func (c App) Edit() revel.Result {
+	return c.Render()
+}

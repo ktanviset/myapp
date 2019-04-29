@@ -18,7 +18,7 @@ function updateMap(){
     markers.splice(0, markers.length);
     $('#lolist table tbody').empty();
 
-    let searchString = document.getElementById("searchtext").value;
+    let searchString = $("#searchtext").val();//document.getElementById("searchtext").value;
     let url = "/api/GetMakers?keyword=" + searchString;
     $.get(url, function(data, status){
         console.log(data);

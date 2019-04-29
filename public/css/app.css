@@ -3,12 +3,13 @@ body, html {
     overflow: hidden;
 }
 
-#content-area {
+.content-area {
     height: calc(100% - 56px);
     display: block;
     margin-left: auto;
     margin-right: auto;
     /*margin-top: 5px;*/
+    padding: 30px;
 }
 
 #searchbar {

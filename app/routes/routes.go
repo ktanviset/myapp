@@ -132,6 +132,13 @@ func (_ tApp) Search(
 	return revel.MainRouter.Reverse("App.Search", args).URL
 }
 
+func (_ tApp) Edit(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("App.Edit", args).URL
+}
+
 
 type tMapMakerController struct {}
 var MapMakerController tMapMakerController

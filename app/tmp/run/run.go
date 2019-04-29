@@ -155,6 +155,15 @@ func Register() {
 					},
 				},
 			},
+			&revel.MethodType{
+				Name: "Edit",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+					28: []string{ 
+					},
+				},
+			},
 			
 		})
 	
