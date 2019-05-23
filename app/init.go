@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"database/sql"
+
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/revel/revel"
@@ -49,6 +50,8 @@ func init() {
 // There is a full implementation of a CSRF filter in
 // https://github.com/revel/modules/tree/master/csrf
 var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
+	//(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	c.Response.Out.Header().Add("Access-Control-Allow-Origin", "*")
 	c.Response.Out.Header().Add("X-Frame-Options", "SAMEORIGIN")
 	c.Response.Out.Header().Add("X-XSS-Protection", "1; mode=block")
 	c.Response.Out.Header().Add("X-Content-Type-Options", "nosniff")
