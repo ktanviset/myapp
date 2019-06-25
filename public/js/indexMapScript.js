@@ -20,6 +20,16 @@ function updateMap(){
 
     let searchString = $("#searchtext").val();//document.getElementById("searchtext").value;
     let url = "/api/GetMakers?keyword=" + searchString;
+
+    let valcountry = $("#countrycode").val();
+    if (valcountry != "-1"){
+        url += "&countrycode=" + valcountry;
+    }
+    let valfunction = $("#functioncode").val();
+    if (valfunction != "-1"){
+        url += "&function=" + valfunction;
+    }
+
     $.get(url, function(data, status){
         console.log(data);
 
@@ -57,7 +67,7 @@ function updateMap(){
 
             let rowtable = "<tr>"+
                 "<th scope=\"row\">"+(index+1)+"</th>"+
-                "<td>"+myName+"</td>"+
+                "<td>"+mkdata.FullCountry+"<br>"+myName+"</td>"+
             "</tr>";
 
             $('#lolist table tbody').append(rowtable);
@@ -69,3 +79,25 @@ function updateMap(){
         map.panToBounds(bounds);   
     });
 }
+
+$(function() {
+    let urlmc = "/api/GetMasterCountry";
+    $.get(urlmc, function(data, status){
+        console.log(data);
+
+        $.each(data.Masters, function( index, master ) {
+            let rowtable = "<option value=\"" + master.val + "\">" + master.display + "</option>";
+            $('#countrycode').append(rowtable);
+        });
+    });
+
+    let urlmf = "/api/GetMasterFunction";
+    $.get(urlmf, function(data, status){
+        console.log(data);
+
+        $.each(data.Masters, function( index, master ) {
+            let rowtable = "<option value=\"" + master.val + "\">" + master.display + "</option>";
+            $('#functioncode').append(rowtable);
+        });
+    });
+});

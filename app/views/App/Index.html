@@ -3,8 +3,15 @@
 
 <div class="container flex-main-parent">
   <div id="searchbar" class="form-group row">
-      <input id="searchtext" class="form-control col-10" type="text" placeholder="คำค้น" onk>
+      <input id="searchtext" class="form-control col-4" type="text" placeholder="คำค้น" />
+      <select id="countrycode" class="form-control col-3">
+        <option value="-1" selected="selected">เลือกประเทศ</option>
+      </select>
+      <select id="functioncode" class="form-control col-3">
+        <option value="-1" selected="selected">เลือกประเภท</option>
+      </select>
       <button type="button" class="btn btn-primary col-2" onclick="updateMap()">ค้นหา</button>
+      {{.data}}
   </div>
 
   <div class="row flex-main-area">

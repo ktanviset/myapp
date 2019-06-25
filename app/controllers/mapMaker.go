@@ -51,7 +51,7 @@ func (mm MapMakerController) GetMakers() revel.Result {
 
 	// Execute query
 	// Base query
-	tsql := `SELECT top 1000 
+	tsql := `SELECT top 100 
 		m.id,
 		m.name_th,
 		m.name_en,
@@ -145,4 +145,84 @@ func (mm MapMakerController) GetMakers() revel.Result {
 func (mm MapMakerController) SaveMaker() revel.Result {
 
 	return nil
+}
+
+func (mm MapMakerController) GetMasterCountry() revel.Result {
+	// Build connection string
+	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;", server, user, password, port, database)
+	var err error
+	// Create connection pool
+	db, err = sql.Open("sqlserver", connString)
+	if err != nil {
+		log.Fatal("Error creating connection pool: ", err.Error())
+	}
+
+	ctx := context.Background()
+	err = db.PingContext(ctx)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	fmt.Printf("Connected!\n")
+
+	tsql := `SELECT id, val, name, display FROM master_country;`
+
+	fmt.Printf("tsql!" + tsql + "\n")
+	rows, err := db.QueryContext(ctx, tsql)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	listmasters := models.ListMasters{}
+	masters := []*models.Master{}
+
+	for rows.Next() {
+		master := new(models.Master)
+		if err := rows.Scan(&master.ID, &master.Val, &master.Name, &master.Display); err != nil {
+			fmt.Println(err)
+		}
+		masters = append(masters, master)
+	}
+
+	listmasters.Masters = masters
+	return mm.RenderJSON(listmasters)
+}
+
+func (mm MapMakerController) GetMasterFunction() revel.Result {
+	// Build connection string
+	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;", server, user, password, port, database)
+	var err error
+	// Create connection pool
+	db, err = sql.Open("sqlserver", connString)
+	if err != nil {
+		log.Fatal("Error creating connection pool: ", err.Error())
+	}
+
+	ctx := context.Background()
+	err = db.PingContext(ctx)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	fmt.Printf("Connected!\n")
+
+	tsql := `SELECT id, val, name, display FROM master_functions;`
+
+	fmt.Printf("tsql!" + tsql + "\n")
+	rows, err := db.QueryContext(ctx, tsql)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	listmasters := models.ListMasters{}
+	masters := []*models.Master{}
+
+	for rows.Next() {
+		master := new(models.Master)
+		if err := rows.Scan(&master.ID, &master.Val, &master.Name, &master.Display); err != nil {
+			fmt.Println(err)
+		}
+		masters = append(masters, master)
+	}
+
+	listmasters.Masters = masters
+	return mm.RenderJSON(listmasters)
 }

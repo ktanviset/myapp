@@ -158,4 +158,18 @@ func (_ tMapMakerController) SaveMaker(
 	return revel.MainRouter.Reverse("MapMakerController.SaveMaker", args).URL
 }
 
+func (_ tMapMakerController) GetMasterCountry(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("MapMakerController.GetMasterCountry", args).URL
+}
+
+func (_ tMapMakerController) GetMasterFunction(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("MapMakerController.GetMasterFunction", args).URL
+}
+
 
