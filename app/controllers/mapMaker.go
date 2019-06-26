@@ -55,22 +55,23 @@ func (mm MapMakerController) GetMakers() revel.Result {
 	// Base query
 	tsql := `SELECT top 100 
 		m.id,
-		m.name_th,
-		m.name_en,
+		COALESCE(m.name_th, '') [name_th],
+		COALESCE(m.name_en, '') [name_en],
 		case when m.latitude is null then 0 else m.latitude end [latitude],
 		case when m.longitude is null then 0 else m.longitude end [longitude],
-		m.lo_code,
-		m.lo_code_country,
-		mc.display [full_country],
+		COALESCE(m.lo_code, '') [lo_code],
+		COALESCE(m.lo_code_country, '') [lo_code_country],
+		COALESCE(mc.display, '') [full_country],
 		case when m.truck_amount is null then 0 else m.truck_amount end [truck_amount],
-		m.func_1,
-		m.func_2,
-		m.func_3,
-		m.func_4,
-		m.func_5,
-		m.func_6,
-		m.func_7,
-		m.func_8
+		COALESCE(m.func_1, '') [func_1],
+		COALESCE(m.func_2, '') [func_2],
+		COALESCE(m.func_3, '') [func_3],
+		COALESCE(m.func_4, '') [func_4],
+		COALESCE(m.func_5, '') [func_5],
+		COALESCE(m.func_6, '') [func_6],
+		COALESCE(m.func_7, '') [func_7],
+		COALESCE(m.func_8, '') [func_8],
+		COALESCE(m.truck_type, '') [truck_type]
 	FROM map_maker m
 	cross apply (
 		select top 1 *
@@ -150,7 +151,8 @@ func (mm MapMakerController) GetMakers() revel.Result {
 			&maker.Func5,
 			&maker.Func6,
 			&maker.Func7,
-			&maker.Func8); err != nil {
+			&maker.Func8,
+			&maker.TruckType); err != nil {
 			fmt.Println(err)
 		}
 		makers = append(makers, maker)

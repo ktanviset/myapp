@@ -29,6 +29,10 @@ function updateMap(){
     if (valfunction != "-1"){
         url += "&function=" + valfunction;
     }
+    let ubthlocode = $("#ubthlocode").val();
+    if (ubthlocode != ""){
+        url += "&locode=" + ubthlocode;
+    }
 
     $.get(url, function(data, status){
         console.log(data);
@@ -63,7 +67,7 @@ function updateMap(){
 
             marker.addListener('click', function() {
                 let i = index;
-                let text = "<div class=\"infowindoes\"><p class=\"text-justify\">" + golistmarker[i].title + "<br>Location Code:" + golistmarker[i].locode + "</p></div>";
+                let text = "<div><p>" + golistmarker[i].title + "<br>Location Code:" + golistmarker[i].locode + "</p></div>";
                 infowindow.setContent(text);
                 infowindow.open(map, golistmarker[i]);
             });
@@ -101,6 +105,7 @@ function updateMap(){
                 "<td>"+mkdata.Func7+"</td>"+
                 "<td>"+mkdata.Func8+"</td>"+
                 "<td>"+mkdata.TruckAmount+"</td>"+
+                "<td>"+mkdata.TruckType+"</td>"+
             "</tr>";
 
             $('#lolist table tbody').append(rowtable);

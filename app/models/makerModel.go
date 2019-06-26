@@ -18,6 +18,7 @@ type Maker struct {
 	Func6         string  `json:"Func6"`
 	Func7         string  `json:"Func7"`
 	Func8         string  `json:"Func8"`
+	TruckType     string  `json:"TruckType"`
 }
 
 type ListMakers struct {
