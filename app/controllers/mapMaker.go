@@ -32,6 +32,8 @@ func (mm MapMakerController) GetMakers() revel.Result {
 	fmt.Printf("function!" + function + "\n")
 	countrycode := mm.Params.Query.Get("countrycode")
 	fmt.Printf("countrycode!" + countrycode + "\n")
+	locode := mm.Params.Query.Get("locode")
+	fmt.Printf("locode!" + locode + "\n")
 
 	// Build connection string
 	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;", server, user, password, port, database)
@@ -59,7 +61,16 @@ func (mm MapMakerController) GetMakers() revel.Result {
 		case when m.longitude is null then 0 else m.longitude end [longitude],
 		m.lo_code,
 		m.lo_code_country,
-		mc.display [full_country]
+		mc.display [full_country],
+		case when m.truck_amount is null then 0 else m.truck_amount end [truck_amount],
+		m.func_1,
+		m.func_2,
+		m.func_3,
+		m.func_4,
+		m.func_5,
+		m.func_6,
+		m.func_7,
+		m.func_8
 	FROM map_maker m
 	cross apply (
 		select top 1 *
@@ -105,6 +116,10 @@ func (mm MapMakerController) GetMakers() revel.Result {
 	if countrycode != "" {
 		tsql += " and lo_code_country = '" + countrycode + "'"
 	}
+	// Addc Condition locode
+	if locode != "" {
+		tsql += " and lo_code = '" + locode + "'"
+	}
 
 	tsql += ";"
 	fmt.Printf("tsql!" + tsql + "\n")
@@ -126,7 +141,16 @@ func (mm MapMakerController) GetMakers() revel.Result {
 			&maker.Longitude,
 			&maker.LoCode,
 			&maker.LoCodeCountry,
-			&maker.FullCountry); err != nil {
+			&maker.FullCountry,
+			&maker.TruckAmount,
+			&maker.Func1,
+			&maker.Func2,
+			&maker.Func3,
+			&maker.Func4,
+			&maker.Func5,
+			&maker.Func6,
+			&maker.Func7,
+			&maker.Func8); err != nil {
 			fmt.Println(err)
 		}
 		makers = append(makers, maker)
@@ -164,7 +188,7 @@ func (mm MapMakerController) GetMasterCountry() revel.Result {
 	}
 	fmt.Printf("Connected!\n")
 
-	tsql := `SELECT id, val, name, display FROM master_country;`
+	tsql := `SELECT id, val, name, display FROM master_country order by name;`
 
 	fmt.Printf("tsql!" + tsql + "\n")
 	rows, err := db.QueryContext(ctx, tsql)

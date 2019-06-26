@@ -1,5 +1,5 @@
 var map;
-var markers = [];
+var golistmarker = [];
 var infowindow;
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -12,10 +12,10 @@ function initMap() {
     });
 }
 function updateMap(){
-    $.each(markers, function( index, marker ) {
+    $.each(golistmarker, function( index, marker ) {
         marker.setMap(null);
     });
-    markers.splice(0, markers.length);
+    golistmarker.splice(0, golistmarker.length);
     $('#lolist table tbody').empty();
 
     let searchString = $("#searchtext").val();//document.getElementById("searchtext").value;
@@ -44,7 +44,10 @@ function updateMap(){
 
             let myName = mkdata.nameTh;
             if (mkdata.nameEn != null){
-                myName += "<br>" + mkdata.nameEn;
+                if (myName != ""){
+                    myName += "<br>";
+                }
+                myName += mkdata.nameEn;
             }
 
             var marker = new google.maps.Marker({
@@ -60,26 +63,55 @@ function updateMap(){
 
             marker.addListener('click', function() {
                 let i = index;
-                let text = "<div class=\"infowindoes\"><p class=\"text-justify\">" + markers[i].title + "<br>Location Code:" + markers[i].locode + "</p></div>";
+                let text = "<div class=\"infowindoes\"><p class=\"text-justify\">" + golistmarker[i].title + "<br>Location Code:" + golistmarker[i].locode + "</p></div>";
                 infowindow.setContent(text);
-                infowindow.open(map, markers[i]);
+                infowindow.open(map, golistmarker[i]);
             });
 
-            let rowtable = "<tr>"+
+            let func0 = "";
+            let func1 = "";
+
+            if (mkdata.Func1 != ""){
+                if (mkdata.Func1 == "0"){
+                    func0 = "Y";
+                } else {
+                    func0 = "N";
+                }
+
+                if (mkdata.Func1 == "1"){
+                    func1 = "Y"
+                } else {
+                    func1 = "N"
+                }
+            }
+
+            let rowtable = 
+            "<tr>"+
                 "<th scope=\"row\">"+(index+1)+"</th>"+
-                "<td>"+mkdata.FullCountry+"<br>"+myName+"</td>"+
+                "<td>"+myName+"</td>"+
+                "<td>"+mkdata.loCode+"</td>"+
+                "<td>"+mkdata.FullCountry+"</td>"+
+                "<td>"+func0+"</td>"+//func0
+                "<td>"+func1+"</td>"+//func1
+                "<td>"+mkdata.Func2+"</td>"+
+                "<td>"+mkdata.Func3+"</td>"+
+                "<td>"+mkdata.Func4+"</td>"+
+                "<td>"+mkdata.Func5+"</td>"+
+                "<td>"+mkdata.Func6+"</td>"+
+                "<td>"+mkdata.Func7+"</td>"+
+                "<td>"+mkdata.Func8+"</td>"+
+                "<td>"+mkdata.TruckAmount+"</td>"+
             "</tr>";
 
             $('#lolist table tbody').append(rowtable);
     
-            markers.push(marker);
+            golistmarker.push(marker);
         });
 
         map.fitBounds(bounds);
         map.panToBounds(bounds);   
     });
 }
-
 $(function() {
     let urlmc = "/api/GetMasterCountry";
     $.get(urlmc, function(data, status){
@@ -96,7 +128,7 @@ $(function() {
         console.log(data);
 
         $.each(data.Masters, function( index, master ) {
-            let rowtable = "<option value=\"" + master.val + "\">" + master.display + "</option>";
+            let rowtable = "<option value=\"" + master.val + "\">" + master.val + " " + master.display + "</option>";
             $('#functioncode').append(rowtable);
         });
     });
