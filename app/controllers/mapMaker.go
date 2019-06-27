@@ -12,13 +12,13 @@ import (
 	"github.com/revel/revel"
 )
 
-var server = "localhost"
-var port = 1450
-var user = "systemweb"
-var password = "1q2w3e4r"
-var database = "app_gmapmaker"
+// var server = "localhost"
+// var port = 1450
+// var user = "systemweb"
+// var password = "1q2w3e4r"
+// var database = "app_gmapmaker"
 
-var db *sql.DB
+// var db *sql.DB
 
 type MapMakerController struct {
 	*revel.Controller

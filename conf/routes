@@ -17,6 +17,8 @@ GET     /api/GetMakers                          MapMakerController.GetMakers
 GET     /api/GetMasterCountry                   MapMakerController.GetMasterCountry
 GET     /api/GetMasterFunction                  MapMakerController.GetMasterFunction
 
+GET     /api/GetTaxpayer                        TaxpayerController.GetTaxpayer
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

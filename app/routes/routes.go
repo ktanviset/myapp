@@ -173,3 +173,15 @@ func (_ tMapMakerController) GetMasterFunction(
 }
 
 
+type tTaxpayerController struct {}
+var TaxpayerController tTaxpayerController
+
+
+func (_ tTaxpayerController) GetTaxpayer(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("TaxpayerController.GetTaxpayer", args).URL
+}
+
+

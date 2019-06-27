@@ -200,6 +200,18 @@ func Register() {
 			
 		})
 	
+	revel.RegisterController((*controllers1.TaxpayerController)(nil),
+		[]*revel.MethodType{
+			&revel.MethodType{
+				Name: "GetTaxpayer",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			
+		})
+	
 	revel.DefaultValidationKeys = map[string]map[int]string{ 
 	}
 	testing.TestSuites = []interface{}{ 
